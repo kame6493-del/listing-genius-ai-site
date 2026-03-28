@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listing Genius AI - AI Product Listing Generator for E-Commerce</title>
+  <meta name="description" content="Generate optimized product listings for Amazon, eBay, Etsy, Mercari & more with AI. Write compelling titles, descriptions & tags in seconds.">
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --accent: #f59e0b;
+      --text: #1e293b;
+      --text-light: #64748b;
+      --bg: #ffffff;
+      --bg-alt: #f8fafc;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+    /* Hero */
+    .hero {
+      padding: 80px 0 60px;
+      text-align: center;
+      background: linear-gradient(135deg, #eef2ff 0%, #faf5ff 100%);
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 4px 14px;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      font-size: 13px;
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--primary), #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 20px;
+      color: var(--text-light);
+      max-width: 600px;
+      margin: 0 auto 30px;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      background: var(--primary);
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+
+    .hero-cta:hover { background: var(--primary-dark); transform: translateY(-1px); }
+
+    .hero-sub {
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--text-light);
+    }
+
+    /* Platforms */
+    .platforms {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+
+    .platform-logo {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-light);
+      padding: 8px 16px;
+      background: white;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+    }
+
+    /* Features */
+    .features {
+      padding: 80px 0;
+    }
+
+    .features h2 {
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 48px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .feature-card {
+      padding: 24px;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      transition: all 0.2s;
+    }
+
+    .feature-card:hover {
+      border-color: var(--primary);
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.1);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #eef2ff, #faf5ff);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-size: 24px;
+    }
+
+    .feature-card h3 { font-size: 16px; margin-bottom: 8px; }
+    .feature-card p { font-size: 14px; color: var(--text-light); }
+
+    /* Pricing */
+    .pricing {
+      padding: 80px 0;
+      background: var(--bg-alt);
+    }
+
+    .pricing h2 {
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+
+    .pricing-subtitle {
+      text-align: center;
+      color: var(--text-light);
+      margin-bottom: 48px;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .price-card {
+      background: white;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 32px;
+      text-align: center;
+    }
+
+    .price-card.featured {
+      border-color: var(--primary);
+      position: relative;
+    }
+
+    .price-card.featured::before {
+      content: 'MOST POPULAR';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 2px 16px;
+      background: var(--primary);
+      color: white;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .price-card h3 { font-size: 20px; margin-bottom: 8px; }
+
+    .price-amount {
+      font-size: 42px;
+      font-weight: 800;
+      margin: 16px 0;
+    }
+
+    .price-amount span { font-size: 16px; font-weight: 400; color: var(--text-light); }
+
+    .price-features {
+      list-style: none;
+      text-align: left;
+      margin: 24px 0;
+    }
+
+    .price-features li {
+      padding: 6px 0;
+      font-size: 14px;
+      color: var(--text-light);
+    }
+
+    .price-features li::before {
+      content: "\2713 ";
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    .price-btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      text-align: center;
+    }
+
+    .price-btn-free {
+      background: var(--bg-alt);
+      color: var(--text);
+      border: 1px solid #e2e8f0;
+    }
+
+    .price-btn-pro {
+      background: var(--primary);
+      color: white;
+    }
+
+    .price-btn-pro:hover { background: var(--primary-dark); }
+
+    /* How It Works */
+    .how-it-works {
+      padding: 80px 0;
+    }
+
+    .how-it-works h2 {
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 48px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .step {
+      text-align: center;
+    }
+
+    .step-number {
+      width: 48px;
+      height: 48px;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      margin: 0 auto 16px;
+    }
+
+    .step h3 { font-size: 16px; margin-bottom: 8px; }
+    .step p { font-size: 14px; color: var(--text-light); }
+
+    /* Footer */
+    .footer {
+      padding: 40px 0;
+      border-top: 1px solid #e2e8f0;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-light);
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 32px; }
+      .features-grid, .steps { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <span class="hero-badge">AI-Powered E-Commerce Tool</span>
+      <h1>Write Listings That Sell.<br>In Seconds.</h1>
+      <p>Generate optimized product titles, descriptions, bullet points & tags for any marketplace with AI.</p>
+      <a href="#" class="hero-cta">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C8.21 0 8.21 0 8.21 0 3.58 1.67 0 6.32 0 12c0 6.63 5.37 12 12 12s12-5.37 12-12C24 5.37 18.63 0 12 0zm0 2c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2z"/></svg>
+        Add to Chrome - Free
+      </a>
+      <p class="hero-sub">Free plan includes 5 generations per day. No credit card required.</p>
+
+      <div class="platforms">
+        <span class="platform-logo">Amazon</span>
+        <span class="platform-logo">eBay</span>
+        <span class="platform-logo">Etsy</span>
+        <span class="platform-logo">Mercari</span>
+        <span class="platform-logo">Rakuten</span>
+        <span class="platform-logo">Shopify</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="how-it-works">
+    <div class="container">
+      <h2>How It Works</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Describe Your Product</h3>
+          <p>Type keywords about your product - brand, size, condition, features.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Choose Platform & Style</h3>
+          <p>Select your marketplace and preferred tone. AI adapts to each platform's best practices.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Copy & Sell</h3>
+          <p>Get optimized title, description, bullet points & tags. One-click copy or auto-fill.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features">
+    <div class="container">
+      <h2>Everything You Need to Sell More</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F3AF;</div>
+          <h3>Platform-Optimized</h3>
+          <p>AI follows each marketplace's best practices - character limits, SEO rules, and formatting guidelines.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F30D;</div>
+          <h3>7 Languages</h3>
+          <p>Generate listings in English, Japanese, Spanish, Chinese, Korean, French, and German.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x26A1;</div>
+          <h3>Instant Results</h3>
+          <p>Get complete listings in under 10 seconds. Title, description, bullet points, and tags.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F3A8;</div>
+          <h3>5 Writing Styles</h3>
+          <p>Professional, casual, luxury, bargain, or creative - match your brand's voice.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4CB;</div>
+          <h3>Auto-Fill Forms</h3>
+          <p>On supported sites, fill listing forms directly with generated content. Zero copy-pasting.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4BE;</div>
+          <h3>Generation History</h3>
+          <p>All your past generations are saved locally. Reuse and refine your best listings.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <h2>Simple Pricing</h2>
+      <p class="pricing-subtitle">Start free. Upgrade when you need more.</p>
+      <div class="pricing-grid">
+        <div class="price-card">
+          <h3>Free</h3>
+          <div class="price-amount">$0<span>/month</span></div>
+          <ul class="price-features">
+            <li>5 generations per day</li>
+            <li>All platforms supported</li>
+            <li>All languages</li>
+            <li>Generation history</li>
+            <li>Context menu integration</li>
+          </ul>
+          <a href="#" class="price-btn price-btn-free">Get Started</a>
+        </div>
+        <div class="price-card featured">
+          <h3>Pro</h3>
+          <div class="price-amount">$7.99<span>/month</span></div>
+          <ul class="price-features">
+            <li>200 generations per day</li>
+            <li>All platforms supported</li>
+            <li>All languages</li>
+            <li>Generation history + export</li>
+            <li>Auto-fill form fields</li>
+            <li>Priority AI model</li>
+            <li>Priority support</li>
+          </ul>
+          <a href="#" class="price-btn price-btn-pro" id="btn-buy-pro">Get Pro</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>Listing Genius AI &copy; 2026. All rights reserved.</p>
+      <p style="margin-top: 8px;">
+        <a href="privacy.html" style="color: var(--primary);">Privacy Policy</a> &middot;
+        <a href="tokushoho.html" style="color: var(--primary);">特定商取引法に基づく表記</a> &middot;
+        <a href="mailto:support@listinggenius.ai" style="color: var(--primary);">Contact</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
